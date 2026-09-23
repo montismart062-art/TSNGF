@@ -1,120 +1,525 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TSNGF | الفلتر النانوي الحيوي الأخضر</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            green: '#15803d', // Deep green for agriculture
+                            lightGreen: '#dcfce7',
+                            blue: '#0284c7',  // Water blue
+                            dark: '#1e293b',
+                            light: '#f8fafc'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'], // Using a better Arabic font
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom styles for things Tailwind is too verbose for */
+        body { font-family: 'Tajawal', sans-serif; }
+        .hero-pattern {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#15803d 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: -10px -10px;
+        }
+        /* Hide scrollbar for tables but keep functionality */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
-<body>
-    <!-- شريط التنقل -->
-    <header>
-        <div class="container nav-container">
-            <h1 class="logo">TSNGF</h1>
-            <nav>
-                <ul>
-                    <li><a href="#home">الرئيسية</a></li>
-                    <li><a href="#about">عن الفلتر</a></li>
-                    <li><a href="#products">المنتجات</a></li>
-                    <li><a href="#contact">تواصل معنا</a></li>
-                    <li><a href="admin.html" class="btn-outline">دخول الإدارة</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<body class="bg-brand-light text-brand-dark antialiased">
 
-    <!-- القسم الرئيسي -->
-    <section id="home" class="hero">
-        <div class="container">
-            <h2>حوّل مياه الصرف الزراعي إلى مياه ري آمنة</h2>
-            <p>نظام ذكي متعدد المراحل يوفر حلاً مستداماً وبأسعار معقولة للزراعة في مصر.</p>
-            <a href="#products" class="btn-primary">تصفح المنتجات</a>
-        </div>
-    </section>
+    <div id="public-view" class="block">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-sm sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-20 items-center">
+                    <div class="flex-shrink-0 flex items-center gap-2">
+                        <i class="fa-solid fa-leaf text-brand-green text-3xl"></i>
+                        <span class="font-extrabold text-2xl tracking-tight text-brand-dark">TSNGF</span>
+                    </div>
+                    <div class="hidden md:flex space-x-8 space-x-reverse items-center">
+                        <a href="#home" class="text-gray-600 hover:text-brand-green font-medium transition">الرئيسية</a>
+                        <a href="#about" class="text-gray-600 hover:text-brand-green font-medium transition">عن المشروع</a>
+                        <a href="#products" class="text-gray-600 hover:text-brand-green font-medium transition">منتجاتنا</a>
+                        <a href="#contact" class="text-gray-600 hover:text-brand-green font-medium transition">تواصل معنا</a>
+                        <button onclick="toggleView('admin-login')" class="ml-4 px-5 py-2 border-2 border-brand-green text-brand-green font-bold rounded-full hover:bg-brand-green hover:text-white transition duration-300">
+                            <i class="fa-solid fa-lock ml-2 text-sm"></i>الإدارة
+                        </button>
+                    </div>
+                    <!-- Mobile Menu Button -->
+                    <div class="md:hidden flex items-center">
+                        <button class="text-gray-600 hover:text-brand-green focus:outline-none">
+                            <i class="fa-solid fa-bars text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
-    <!-- قسم عن الشركة (الأهداف والافتراضات) -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2>رؤيتنا وأهدافنا</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>زيادة الإنتاجية</h3>
-                    <p>نستهدف زيادة إنتاجية المزارعين بنسبة 80% خلال عام واحد من تطبيق حلولنا.</p>
+        <!-- Hero Section -->
+        <section id="home" class="relative bg-white overflow-hidden hero-pattern">
+            <div class="max-w-7xl mx-auto">
+                <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 pt-20 px-4 sm:px-6 lg:px-8 rounded-bl-[100px]">
+                    <main class="mt-10 mx-auto max-w-7xl sm:mt-12 md:mt-16 lg:mt-20 xl:mt-28">
+                        <div class="sm:text-center lg:text-right">
+                            <span class="block text-brand-blue font-bold tracking-wider mb-2 uppercase text-sm">ابتكار مصري لزراعة مستدامة</span>
+                            <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl leading-tight">
+                                <span class="block">حوّل مياه الصرف الزراعي</span>
+                                <span class="block text-brand-green mt-2">إلى مياه ري آمنة</span>
+                            </h1>
+                            <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                                نظام الفلتر النانوي الحيوي الأخضر ثلاثي المراحل. تقنية ذكية توفر حلاً فعالاً واقتصادياً لمعالجة المياه، مصممة خصيصاً للمزارع واللاندسكيب في مصر.
+                            </p>
+                            <div class="mt-8 sm:flex sm:justify-center lg:justify-start gap-4">
+                                <a href="#products" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-bold rounded-full text-white bg-brand-green hover:bg-green-700 md:py-4 md:text-lg md:px-10 transition shadow-lg shadow-green-200">
+                                    تصفح منتجاتنا
+                                </a>
+                                <a href="#contact" class="mt-3 w-full flex items-center justify-center px-8 py-3 border-2 border-gray-200 text-base font-bold rounded-full text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 transition sm:mt-0">
+                                    تواصل مع خبرائنا
+                                </a>
+                            </div>
+                        </div>
+                    </main>
                 </div>
-                <div class="feature-card">
-                    <h3>الاستدامة واللامركزية</h3>
-                    <p>تقليل اعتماد المجتمعات على البنية التحتية المكلفة بحلول عام 2028.</p>
+            </div>
+            <!-- Decorative Right Side (Hidden on Mobile) -->
+            <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-1/2 bg-gradient-to-br from-brand-green to-brand-blue hidden lg:flex items-center justify-center rounded-tr-[150px] opacity-10">
+                <i class="fa-solid fa-droplet text-[20rem] text-white opacity-20 transform -rotate-12"></i>
+            </div>
+        </section>
+
+        <!-- Vision & Impact Section -->
+        <section id="about" class="py-20 bg-brand-light">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-base text-brand-blue font-bold tracking-wide uppercase">الأثر المتوقع</h2>
+                    <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">رؤيتنا نحو زراعة مستدامة</p>
+                    <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">نعمل على تحقيق أهداف استراتيجية تتماشى مع رؤية مصر 2028 من خلال ابتكاراتنا.</p>
                 </div>
-                <div class="feature-card">
-                    <h3>التوافق القومي</h3>
-                    <p>التكامل مع الخطة القومية للمياه 2028 في مجال معالجة مياه الصرف في المناطق النائية.</p>
+
+                <div class="mt-16">
+                    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        <!-- Feature 1 -->
+                        <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition border border-gray-100">
+                            <div class="w-14 h-14 bg-brand-lightGreen text-brand-green rounded-xl flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-arrow-trend-up text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">زيادة الإنتاجية</h3>
+                            <p class="text-gray-600 leading-relaxed">نستهدف زيادة إنتاجية صغار ومتوسطي المزارعين بنسبة <span class="font-bold text-brand-green">80%</span> خلال عام واحد من تطبيق حلول المياه الخاصة بنا.</p>
+                        </div>
+                        <!-- Feature 2 -->
+                        <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition border border-gray-100">
+                            <div class="w-14 h-14 bg-blue-100 text-brand-blue rounded-xl flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-network-wired text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">لامركزية المعالجة</h3>
+                            <p class="text-gray-600 leading-relaxed">تقليل الاعتماد المجتمعي على البنية التحتية باهظة الثمن بشكل كبير بحلول عام 2028 بفضل طبيعة نظامنا اللامركزي.</p>
+                        </div>
+                        <!-- Feature 3 -->
+                        <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition border border-gray-100">
+                            <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mb-6">
+                                <i class="fa-solid fa-handshake text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">التوافق القومي</h3>
+                            <p class="text-gray-600 leading-relaxed">التكامل مع وزارة الري لتكون TSNGF أداة ضمن "الخطة القومية 2028" للمعالجة الثنائية في المناطق النائية.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">اختر النظام المناسب لأرضك</h2>
+                    <p class="mt-4 text-xl text-gray-500">حلول متكاملة تناسب المزارع الصغيرة والمؤسسات الكبرى.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Manual Filter -->
+                    <div class="border border-gray-200 rounded-3xl p-8 flex flex-col justify-between hover:border-brand-green transition duration-300 relative overflow-hidden">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900">الفلتر اليدوي</h3>
+                            <p class="mt-2 text-gray-500">النوع: Manual</p>
+                            <p class="mt-6 text-4xl font-extrabold text-brand-dark">8,000 <span class="text-lg font-normal text-gray-500">ج.م</span></p>
+                            
+                            <ul class="mt-8 space-y-4">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-brand-green mt-1 ml-3"></i>
+                                    <span class="text-gray-600">تشغيل ومتابعة يدوية</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-brand-green mt-1 ml-3"></i>
+                                    <span class="text-gray-600">هيكل خارجي صلب وثابت</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-brand-green mt-1 ml-3"></i>
+                                    <span class="text-gray-600">مثالي للمزارع الصغيرة والمتوسطة</span>
+                                </li>
+                                <li class="flex items-start opacity-50">
+                                    <i class="fa-solid fa-xmark text-red-500 mt-1 ml-3"></i>
+                                    <span class="text-gray-500 line-through">مستشعرات قراءة ذكية</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="mt-8 block w-full bg-brand-light text-brand-green border border-brand-green font-bold text-center py-3 rounded-xl hover:bg-brand-green hover:text-white transition">طلب المنتج</a>
+                    </div>
+
+                    <!-- Smart Filter (Highlighted) -->
+                    <div class="border-2 border-brand-green rounded-3xl p-8 flex flex-col justify-between relative shadow-xl transform md:-translate-y-4 bg-white z-10">
+                        <div class="absolute top-0 right-0 bg-brand-green text-white px-4 py-1 rounded-bl-xl font-bold text-sm">الأكثر طلباً للشركات</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900">الفلتر الذكي</h3>
+                            <p class="mt-2 text-gray-500">النوع: Smart IoT</p>
+                            <p class="mt-6 text-4xl font-extrabold text-brand-dark">25,000 <span class="text-lg font-normal text-gray-500">ج.م</span></p>
+                            
+                            <ul class="mt-8 space-y-4">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-brand-green mt-1 ml-3"></i>
+                                    <span class="text-gray-600 font-bold">مستشعرات تحليل المياه لحظياً</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-brand-green mt-1 ml-3"></i>
+                                    <span class="text-gray-600 font-bold">لوحة تحكم إلكترونية ومتابعة عن بعد</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-brand-green mt-1 ml-3"></i>
+                                    <span class="text-gray-600">هيكل خارجي ثابت يعيش طويلاً</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-brand-green mt-1 ml-3"></i>
+                                    <span class="text-gray-600">مثالي لمشاريع اللاندسكيب والمؤسسات</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="mt-8 block w-full bg-brand-green text-white font-bold text-center py-3 rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-200">طلب المنتج</a>
+                    </div>
+
+                    <!-- Consumable Filter Cartridge -->
+                    <div class="border border-gray-200 rounded-3xl p-8 flex flex-col justify-between hover:border-brand-blue transition duration-300">
+                        <div>
+                            <div class="w-12 h-12 bg-blue-50 text-brand-blue rounded-full flex items-center justify-center mb-4">
+                                <i class="fa-solid fa-arrows-rotate text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">شمعة الفلتر النانوي</h3>
+                            <p class="mt-2 text-gray-500">القلب النابض للنظام (قطعة استهلاكية)</p>
+                            <p class="mt-6 text-4xl font-extrabold text-brand-dark">2,000 <span class="text-lg font-normal text-gray-500">ج.م</span></p>
+                            
+                            <ul class="mt-8 space-y-4">
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-brand-blue mt-1 ml-3"></i>
+                                    <span class="text-gray-600">قطعة استهلاكية يتم تغييرها كل ريّة</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-brand-blue mt-1 ml-3"></i>
+                                    <span class="text-gray-600">تكفي لتغطية مساحة أرض 3×3 متر</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa-solid fa-check text-brand-blue mt-1 ml-3"></i>
+                                    <span class="text-gray-600">مسؤولة عن المعالجة الثلاثية للمياه</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="mt-8 block w-full bg-blue-50 text-brand-blue border border-brand-blue font-bold text-center py-3 rounded-xl hover:bg-brand-blue hover:text-white transition">طلب شمعات إضافية</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 bg-brand-dark text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center justify-between bg-white/10 p-8 md:p-12 rounded-3xl backdrop-blur-sm border border-white/20">
+                    <div class="md:w-1/2 mb-8 md:mb-0">
+                        <h2 class="text-3xl font-extrabold mb-4">هل أنت مستعد لتطوير مزرعتك؟</h2>
+                        <p class="text-gray-300 text-lg mb-6">تواصل مع خبرائنا الآن للحصول على استشارة مجانية وطلب النظام المناسب لاحتياجاتك.</p>
+                    </div>
+                    <div class="md:w-1/2 flex flex-col sm:flex-row gap-4 justify-end w-full">
+                        <a href="tel:01224570603" dir="ltr" class="flex items-center justify-center gap-3 bg-white text-brand-dark px-6 py-4 rounded-xl font-bold hover:bg-gray-100 transition shadow-lg">
+                            <i class="fa-solid fa-phone text-brand-green"></i>
+                            01224570603
+                        </a>
+                        <a href="mailto:manar23gamal@gmail.com" class="flex items-center justify-center gap-3 bg-brand-green text-white px-6 py-4 rounded-xl font-bold hover:bg-green-600 transition shadow-lg shadow-green-900/50">
+                            <i class="fa-solid fa-envelope"></i>
+                            راسلنا إلكترونياً
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 border-t border-gray-800 text-gray-400 py-8 text-center">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center justify-center gap-2 mb-4 opacity-50">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span class="font-bold text-xl tracking-tight">TSNGF</span>
+                </div>
+                <p>&copy; 2026 TSNGF للمياه والزراعة المستدامة. جميع الحقوق محفوظة.</p>
+            </div>
+        </footer>
+    </div>
+
+        <!-- Admin Login Screen (Hidden by default) -->
+    <div id="admin-login" class="hidden min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="flex justify-center text-brand-green mb-4">
+                <i class="fa-solid fa-shield-halved text-5xl"></i>
+            </div>
+            <h2 class="text-center text-3xl font-extrabold text-gray-900">بوابة الإدارة</h2>
+            <p class="mt-2 text-center text-sm text-gray-600">قم بتسجيل الدخول للوصول إلى قاعدة بيانات العملاء</p>
+        </div>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="bg-white py-8 px-4 shadow-xl sm:rounded-2xl sm:px-10 border border-gray-100">
+                <form class="space-y-6" onsubmit="handleLogin(event)">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700">اسم المستخدم</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <i class="fa-solid fa-user text-gray-400"></i>
+                            </div>
+                            <input id="username" type="text" required class="focus:ring-brand-green focus:border-brand-green block w-full pr-10 sm:text-sm border-gray-300 rounded-lg py-3 bg-gray-50 border">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">كلمة المرور</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <i class="fa-solid fa-lock text-gray-400"></i>
+                            </div>
+                            <input id="password" type="password" required class="focus:ring-brand-green focus:border-brand-green block w-full pr-10 sm:text-sm border-gray-300 rounded-lg py-3 bg-gray-50 border">
+                        </div>
+                    </div>
+
+                    <p id="login-error" class="text-red-500 text-sm font-medium hidden bg-red-50 p-3 rounded-lg border border-red-100">بيانات الدخول غير صحيحة.</p>
+
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-brand-green hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-green transition">
+                            تسجيل الدخول
+                        </button>
+                    </div>
+                </form>
+                <div class="mt-6">
+                    <button onclick="toggleView('public-view')" class="w-full text-center text-sm text-gray-500 hover:text-brand-dark transition">
+                        <i class="fa-solid fa-arrow-right ml-1"></i> العودة للموقع
+                    </button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- قسم المنتجات -->
-    <section id="products" class="products">
-        <div class="container">
-            <h2>منتجاتنا</h2>
-            <div class="products-grid">
-                <!-- الفلتر الذكي -->
-                <div class="product-card">
-                    <div class="badge">الأكثر مبيعاً للشركات</div>
-                    <h3>الفلتر الذكي (Smart)</h3>
-                    <p class="price">25,000 ج.م</p>
-                    <ul>
-                        <li>مستشعرات وقراءات مستمرة للمياه</li>
-                        <li>لوحة تحكم إلكترونية ومتابعة ذكية</li>
-                        <li>هيكل خارجي ثابت يعيش طويلاً</li>
-                        <li>مثالي لأصحاب اللاندسكيب والمؤسسات</li>
-                    </ul>
-                    <a href="#contact" class="btn-primary">اطلب الآن</a>
+    <!-- Admin Dashboard (Hidden by default) -->
+    <div id="admin-dashboard" class="hidden min-h-screen bg-gray-100">
+        <!-- Dashboard Nav -->
+        <nav class="bg-brand-dark text-white shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-chart-line text-brand-green text-xl"></i>
+                        <span class="font-bold text-lg tracking-wide">TSNGF Dashboard</span>
+                    </div>
+                    <button onclick="handleLogout()" class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg text-sm font-bold transition flex items-center gap-2">
+                        <i class="fa-solid fa-power-off"></i> خروج
+                    </button>
                 </div>
-                <!-- الفلتر العادي -->
-                <div class="product-card">
-                    <h3>الفلتر اليدوي (Manual)</h3>
-                    <p class="price">8,000 ج.م</p>
-                    <ul>
-                        <li>تشغيل ومتابعة يدوية</li>
-                        <li>بدون مستشعرات إلكترونية</li>
-                        <li>هيكل خارجي ثابت</li>
-                        <li>مثالي للمزارع الصغيرة والمتوسطة</li>
-                    </ul>
-                    <a href="#contact" class="btn-primary">اطلب الآن</a>
+            </div>
+        </nav>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-brand-green">
+                    <p class="text-sm text-gray-500 font-medium">إجمالي عملاء الأفراد</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2" id="stat-ind">20</p>
                 </div>
-                <!-- الشمعة الداخلية -->
-                <div class="product-card">
-                    <h3>شمعة الفلتر النانوي</h3>
-                    <p class="price">2,000 ج.م</p>
-                    <ul>
-                        <li>قطعة استهلاكية يتم تغييرها كل ريّة</li>
-                        <li>تكفي لتغطية مساحة 3×3 متر</li>
-                        <li>مسؤولة عن التنقية الفعلية للمياه</li>
-                        <li>تركيب سهل داخل الهيكل الثابت</li>
-                    </ul>
-                    <a href="#contact" class="btn-primary">اطلب الآن</a>
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-brand-blue">
+                    <p class="text-sm text-gray-500 font-medium">مبيعات المؤسسات المسجلة</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2" id="stat-inst">2</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-amber-500">
+                    <p class="text-sm text-gray-500 font-medium">إجمالي الإيرادات (المؤسسات)</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2">29,000 <span class="text-sm text-gray-500 font-normal">ج.م</span></p>
+                </div>
+            </div>
+
+            <!-- Data Tables -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                <div class="px-6 py-5 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                    <h3 class="text-lg leading-6 font-bold text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-users text-brand-green"></i> قاعدة بيانات عملاء الأفراد
+                    </h3>
+                </div>
+                <div class="overflow-x-auto hide-scrollbar">
+                    <table class="min-w-full divide-y divide-gray-200" id="individuals-table">
+                        <thead class="bg-white">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">م</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">الاسم (رباعي)</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">الرقم القومي</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">التليفون</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-100">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-5 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                    <h3 class="text-lg leading-6 font-bold text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-building text-brand-blue"></i> سجل مبيعات المؤسسات (B2B)
+                    </h3>
+                </div>
+                <div class="overflow-x-auto hide-scrollbar">
+                    <table class="min-w-full divide-y divide-gray-200" id="institutions-table">
+                        <thead class="bg-white">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">التاريخ</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">العميل</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">المنتج</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">الكمية</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">إجمالي المبيعات</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-100">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- قسم التواصل -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>تواصل معنا</h2>
-            <p>لطلب المنتجات أو الاستفسار، يسعدنا تواصلكم عبر:</p>
-            <div class="contact-info">
-                <p><strong>الهاتف:</strong> <a href="tel:01224570603" dir="ltr">01224570603</a></p>
-                <p><strong>البريد الإلكتروني:</strong> <a href="mailto:manar23gamal@gmail.com">manar23gamal@gmail.com</a></p>
-            </div>
-        </div>
-    </section>
+    <script>
+        // --- Data Extraction from User's Files ---
+        
+        // From "image_1f51da.jpg"
+        const individualsData = [
+            { id: 1, name: "احمد سيد عبد العاطي", nationalId: "28208292200612", phone: "01153143828" },
+            { id: 2, name: "ربيع محمد سيد محمد", nationalId: "28910092200533", phone: "01118653750" },
+            { id: 3, name: "عماد محمد الصغير أحمد", nationalId: "28406162200714", phone: "01142643188" },
+            { id: 4, name: "عبد الكريم حسن سليمان معمر", nationalId: "25810182200979", phone: "01119325642" },
+            { id: 5, name: "عيد عبد العظيم ابراهيم", nationalId: "26602102200517", phone: "01115999611" },
+            { id: 6, name: "عمر زايد أحمد زايد", nationalId: "26907162200198", phone: "01243796021" },
+            { id: 7, name: "ناصر عبد السلام كامل عبد الباقي", nationalId: "26222162200456", phone: "01145233646" },
+            { id: 8, name: "عمر محمد أحمد محمد", nationalId: "27707092200556", phone: "01158864019" },
+            { id: 9, name: "رمضان محمد طه عبد الجليل", nationalId: "27111082200612", phone: "01147106592" },
+            { id: 10, name: "محمد محمود جوده", nationalId: "28209282201013", phone: "01145233646" },
+            { id: 11, name: "شريف كامل شحاتة كامل", nationalId: "29001102200719", phone: "01112478950" },
+            { id: 12, name: "نبيل إبراهيم حسن جابر", nationalId: "30004012201818", phone: "01115938581" },
+            { id: 13, name: "رمضان فتحي سيد", nationalId: "27709062200139", phone: "01116912767" },
+            { id: 14, name: "رمضان حامد شحاته", nationalId: "25803232200758", phone: "01143128873" },
+            { id: 15, name: "محمود جوده طلبه", nationalId: "25410162200419", phone: "01119137695" },
+            { id: 16, name: "جابر عبد الظاهر عبد التواب", nationalId: "27711292200736", phone: "01158494095" },
+            { id: 17, name: "هشام احمد سيد", nationalId: "28402062200517", phone: "01112826065" },
+            { id: 18, name: "احمد محمد نجيب", nationalId: "28510162200678", phone: "01149292214" },
+            { id: 19, name: "عبد الجواد محمد نجيب", nationalId: "28101012202071", phone: "01149292214" },
+            { id: 20, name: "محمود محمد نجيب", nationalId: "28410292200896", phone: "01149292214" }
+        ];
 
-    <footer>
-        <div class="container">
-            <p>جميع الحقوق محفوظة &copy; 2026 TSNGF</p>
-        </div>
-    </footer>
+        // From "Client Database.xlsx"
+        const institutionsData = [
+            { date: "15/01/2024", client: "جمعية العواونة الزراعية", product: "الفلتر اليدوي", qty: 2, total: "12,000", status: "مدفوع (نقدي)" },
+            { date: "02/02/2024", client: "شركة راية للاندسكيب", product: "الفلتر الذكي", qty: 1, total: "17,000", status: "مدفوع (نقدي)" }
+        ];
+
+        // --- View Management ---
+        function toggleView(viewId) {
+            document.getElementById('public-view').classList.add('hidden');
+            document.getElementById('admin-login').classList.add('hidden');
+            document.getElementById('admin-dashboard').classList.add('hidden');
+            
+            document.getElementById(viewId).classList.remove('hidden');
+            window.scrollTo(0,0);
+        }
+
+        // --- Authentication ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const errorEl = document.getElementById('login-error');
+
+            // Default credentials as requested
+            if(user === 'admin' && pass === '12345') {
+                errorEl.classList.add('hidden');
+                populateDashboard();
+                toggleView('admin-dashboard');
+            } else {
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            toggleView('public-view');
+        }
+
+        // --- Data Population ---
+        function populateDashboard() {
+            // Update stats
+            document.getElementById('stat-ind').innerText = individualsData.length;
+            document.getElementById('stat-inst').innerText = institutionsData.length;
+
+            // Populate Individuals Table
+            const indTbody = document.querySelector('#individuals-table tbody');
+            indTbody.innerHTML = '';
+            individualsData.forEach((client, index) => {
+                const bg = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                indTbody.innerHTML += `
+                    <tr class="${bg} hover:bg-green-50 transition">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${client.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${client.name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${client.nationalId}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono" dir="ltr">${client.phone}</td>
+                    </tr>
+                `;
+            });
+
+            // Populate Institutions Table
+            const instTbody = document.querySelector('#institutions-table tbody');
+            instTbody.innerHTML = '';
+            institutionsData.forEach((sale, index) => {
+                const bg = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                instTbody.innerHTML += `
+                    <tr class="${bg} hover:bg-blue-50 transition">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${sale.date}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${sale.client}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <span class="px-2 py-1 rounded-full text-xs font-bold ${sale.product.includes('الذكي') ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800'}">${sale.product}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${sale.qty}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">${sale.total}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="text-green-600 bg-green-50 px-2 py-1 rounded border border-green-200"><i class="fa-solid fa-check-circle mr-1"></i> ${sale.status}</span>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+    </script>
 </body>
 </html>
